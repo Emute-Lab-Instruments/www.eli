@@ -12,25 +12,47 @@ Most digital music systems run on a fixed update loop frequency, but uSEQ is a b
 
 Timing functions take a functional rendering approach; they are "driven" by the current time ```t``` (or any time-varying value that's derived from it), and react accordingly. 
 
-Much of the sequencing in uSEQ is done using _phasors_: ramps that rise from 0 to 1 over a fixed time period.
+Much of the sequencing in uSEQ is done using _phasors_: ramps that rise from 0 to 1 over a fixed time period. There are a few pre-defined phasors for convenience (see below), but you don't have to use them and you can always define your own. 
+
+For example, to get a phasor that loops from 0 to 1 over any arbitrary amount of time, we can use something like the following:
+
+```clojure
+(def my-phasors-duration 1234)
+(def my-phasor (/ (% t my-phasors-duration)
+                  my-phasors-duration))
+```
 
 ## Timing Variables
 
 ### `time`
 
-The number of seconds since the module was last switched on.
+The number of seconds since the module was switched on. This is _always_ absolute and cannot be affected by any speeding-up, slowing-down, or any other temporal transformations (e.g. `sample-at-time`, `fast`, `slow`, and `offset`).
 
 ### `t`
 
-Logical time, similar to the notion of playback transport time in most DAWs; the number of seconds since the last user-requested reset of the transport.
+Similar to `time`, but represents _logical_ time instead. If you are familiar with Digital Audio Workstations (DAWs), this is similar to the notion of the transport marker/playhead: the number of seconds from the beginning of the project's timeline. 
+
+Calling `(useq-rewind)` will reset this to 0, effectively rewinding the module's "playback position marker". Unless rewound, this will simply be the same as `time`, but unlike `time` it can be subject to temporal transformations (e.g. `sample-at-time`, `fast`, `slow`, and `offset`).
 
 ### `beat` 
 
 A phasor, rising from 0-1 over the length of a beat (dependent on the BPM and time signature).
 
+To define your own `beat`-style phasor, please refer to 
+
+```clojure
+(d1 (sqr beat))
+```
+
 ### `bar` 
 
 A phasor, rising from 0-1 over the length of a bar (dependent on the BPM and time signature).
+
+```clojure
+(d1 (sqr bar))
+
+(a1 (from-list [0 0.25 0.5 0.75 1] bar))
+```
 
 ### `phrase` 
 
@@ -48,7 +70,21 @@ The tempo in beats per minute.
 
 The tempo in beats per second.
 
-## Timing functions
+## Time Modification Functions
+
+### `sample-at-time <time> <sig>`
+
+Returns the value of a signal at a particular moment in time.
+
+```clojure
+
+```
+
+### `slow`
+
+## Timing Functions
+
+
 
 ### `set-bpm <bpm>`
 
