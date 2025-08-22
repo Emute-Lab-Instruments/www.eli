@@ -31,28 +31,14 @@ useq:
       url: /useqinfo/useq-opensource/
     - title: "Development Roadmap"
       url: /useqinfo/useq-roadmap/
-  - title: "Getting Started"
-    url: /useq-start/
   - title: "Build Guide"
     url: /useq-build/
+  - title: "Getting Started"
+    url: /useq-start/
   - title: "Livecoding"
     children:
     - title: "What is livecoding?"
       url: /useqinfo/useq-what-is-livecoding/
-  - title: "Quick Modes"
-    children:
-    - title: "Quantiser"
-      url: /quickmodes/quantiser/
-    - title: "Wave Folder"
-      url: /quickmodes/wavefolder/
-    - title: "Noise Source"
-      url: /quickmodes/noisegen/
-    - title: "CV Processor + Pattern Generator"
-      url: /quickmodes/cvprocessor/
-  - title: "ModuLisp"
-    children:
-    - title: "Reference"
-      url: /modulisp-about/
   - title: "uSEQ Tutorials"
     children:
     - title: "Manipulating Signals"
@@ -65,6 +51,24 @@ useq:
       url: /tutorials/envgate/
     - title: "Chaotic Patterns"
       url: /tutorials/chaotic/
+  - title: "Quick Modes"
+    children:
+    - title: "Quantiser"
+      url: /quickmodes/quantiser/
+    - title: "Wave Folder"
+      url: /quickmodes/wavefolder/
+    - title: "Noise Source"
+      url: /quickmodes/noisegen/
+    - title: "CV Processor + Pattern Generator"
+      url: /quickmodes/cvprocessor/
+  - title: "Making Music"
+    children:
+    - title: "Sequencing and Patterns"
+      url: /useqapi/useq-sequencing
+    - title: "Scheduling"
+      url: /useqapi/useq-scheduling
+    - title: "Probabilities"
+      url: /useqapi/useq-prob
   - title: "uSEQ API Reference"
     children:
     - title: "Timing"
@@ -73,12 +77,9 @@ useq:
       url: /useqapi/useq-inputs/
     - title: "Outputs"
       url: /useqapi/useq-outputs/
-    - title: "Sequencing and Patterns"
-      url: /useqapi/useq-sequencing
-    - title: "Scheduling"
-      url: /useqapi/useq-scheduling
-    - title: "Probabilities"
-      url: /useqapi/useq-prob
     - title: "System Utilities"
       url: /useqapi/useq-system
-  
+  - title: "ModuLisp"
+    children:
+    - title: "Reference"
+      url: /modulisp-about/

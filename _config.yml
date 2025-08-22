@@ -88,6 +88,9 @@ footer:
     - label: "Instagram"
       icon: "fab fa-fw fa-instagram"
       url: "https://www.instagram.com/emutelabinstruments/"
+    - label: "YouTube"
+      icon: "fab fa-fw fa-youtube"
+      url: "https://www.youtube.com/@EmuteLabInstruments"
 
 defaults:
   # _posts
@@ -99,7 +102,7 @@ defaults:
       author_profile: false
       read_time: true
       comments: false
-      share: true
+      share: false
       related: true
   # _pages
   - scope:
