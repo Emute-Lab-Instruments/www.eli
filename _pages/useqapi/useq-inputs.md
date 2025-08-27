@@ -48,6 +48,8 @@ Example: to echo CV input 2 to CV output 2
 (a2 (ain2))
 ```
 
+## Hardware
+
 ### `swm`
 
 Read the value of the momentary switch
@@ -74,4 +76,47 @@ Control the speed of a square wave with the toggle switch
 (d4 (sqr (fast (scale (swt) 0 2 3 8) beat)))
 ```
 
+# For the MusicThing Workshop System
+
+### `knob`
+
+Read the value of the large knob
+
+``` clojure
+; read the knob and output to a2
+(a2 (knob))
+```
+
+### `knobx`
+
+Read the value of knob X
+
+``` clojure
+; read the knob and output to a2
+(a2 (knobx))
+```
+
+### `knoby`
+
+Read the value of knob y
+
+``` clojure
+; read the knob and output to a2
+(a2 (knoby))
+```
+
+### `swz`
+
+Read the value of switch Z.
+
+| Position | Value  |
+| --- | --- |
+| Down | 0 |
+| Centre | 1 |
+| Up | 2 |
+
+``` clojure
+; read the switch and output to a2
+(a2 (* (swz) 0.5))
+```
 

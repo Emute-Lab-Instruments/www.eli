@@ -69,6 +69,8 @@ useq:
       url: /useqapi/useq-scheduling
     - title: "Probabilities"
       url: /useqapi/useq-prob
+    - title: "DSP Engine"
+      url: /useqapi/useq-ppp
   - title: "uSEQ API Reference"
     children:
     - title: "Timing"
