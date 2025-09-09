@@ -1,4 +1,6 @@
 main:
+  - title: "Myriad"
+    url: /myriad/
   - title: "uSEQ"
     url: /useq/
   - title: "Posts"
@@ -9,6 +11,30 @@ main:
     url: /tags/
   - title: "About"
     url: /about/
+
+myriad:
+  - title: "Myriad"
+    children:
+    - title: "Features"
+      url: /myriad/
+    - title: "Specification"
+      url: /myriad/spec
+    - title: "Power Connection"
+      url: /myriad/powerconnection
+    - title: "Player's Guide"
+      url: /myriad/playersguide
+    - title: "Oscillator Models"
+      url: /myriad/oscmodels
+    - title: "Meta-Modulators"
+      url: /myriad/metamods
+    - title: "Where to Buy"
+      url: /myriad/buy
+    - title: "Build Guide"
+      url: /myriad/build
+    - title: "Firmware"
+      url: /myriad/firmware
+    - title: "Hackers Guide"
+      url: /myriad/hacking
 
 useq:
   - title: "uSEQ"
