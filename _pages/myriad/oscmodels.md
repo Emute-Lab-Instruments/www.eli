@@ -9,137 +9,135 @@ toc_sticky: true
 
 # Models
 
-Myriad has a selection of *oscillator models*; each one is driven by a digital algorithm, using Bitwave Synthesis. Bitwave is a collection of methods for creating high-frequency streams of binary patterns, that are converted into sound using analog circuitry.  Each model has two paramters of control: frequency and ***&#x03F5;***.  The ***&#x03F5;*** parameter creates tonal changes, and works in a different way in each model.  
+Myriad has a selection of *oscillator models*; each one is driven by a digital algorithm, using Bitwave Synthesis. Bitwave is a collection of methods for creating high-frequency streams of binary patterns, that are converted into sound using analog circuitry.  Each model has two paramters of control: frequency and ***&#x03F5;***.  The ***&#x03F5;*** parameter creates tonal changes, and works in a different way with each model.  
+
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/lJBrkULPvJM?si=Jw99--LgZThrmn5r&amp;start=500" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ## (0) Saw
 
-![Oscillator Model 0 Icon](../../assets/images/myriad/oscmodel0.jpg)
+Generates a saw wave with variable pulse width.
 
-Generates a saw wave.
+***&#x03F5;*** controls the pulse width of the saw wave, from around 20% of wavelength to 0.25%, moving from a full sound to a thiner sound.
 
-***&#x03F5;*** controls the pulse width of the saw wave
+![Saw spectrum](../../assets/images/myriad/waveforms/oscmodel0.png)
 
-## (1) Sharktooth
+## (1) Chirp
 
-![Oscillator Model 1 Icon](../../assets/images/myriad/oscmodel1.jpg)
+The Chirp oscillator creates sound with sequences of tiny pulses.
 
-This is a variant of the saw wave, with tonal variations created by smoothing the error feedback in delta-sigma modulation.
+***&#x03F5;*** controls how the width and frequency of the pulses changes, creating tonal variations.
 
-***&#x03F5;*** controls the level of smoothing. Higher values create a thinner sound.  Response to the parameter is frequency dependent.  This model will not reach high frequencies when this is set to a high value.
+![Chirp spectrum](../../assets/images/myriad/waveforms/oscmodel1.png)
 
+## (2) Sharkteeth
 
-## (2) Pulse
+Multiple sawtooth ramps enveloped by a square wave.
 
-![Oscillator Model 2 Icon](../../assets/images/myriad/oscmodel2.jpg)
+***&#x03F5;*** controls the number of teeth per cycle (1 to 20), allowing you to precisely set the dominant upper harmonic.
+
+![Sharkteeth spectrum](../../assets/images/myriad/waveforms/oscmodel2.png)
+
+## (3) Pulse
 
 A pulse wave.
 
 ***&#x03F5;*** controls the pulse width.
 
-## (3) Multipulse-10
+![Pulse spectrum](../../assets/images/myriad/waveforms/oscmodel3.png)
 
-![Oscillator Model 3 Icon](../../assets/images/myriad/oscmodel3.jpg)
+## (4) Resonant Chirp
 
-Each cycle of a waveform smaller pulse waves,which vary in pulse width.
+A variation of the chirp model, with a more resonant tone.
 
-***&#x03F5;*** controls the pulse width.  Moving this control higher introduces additional frequencies.
+***&#x03F5;*** controls how the width and frequency of the pulses changes, creating tonal variations.
 
-## (4) Multipulse-14
-
-![Oscillator Model 4 Icon](../../assets/images/myriad/oscmodel4.jpg)
-
-A variant of multipulse-10.
-
-***&#x03F5;*** controls the pulse width.  Moving this control higher introduces additional frequencies.
+![Resonant Chirp spectrum](../../assets/images/myriad/waveforms/oscmodel4.png)
 
 ## (5) Triangle
 
-![Oscillator Model 5 Icon](../../assets/images/myriad/oscmodel5.jpg)
-
 ***&#x03F5;*** varies the position of the peak point of the triangle.
 
-## (6) TriFB
+![Triangle spectrum](../../assets/images/myriad/waveforms/oscmodel5.png)
 
-![Oscillator Model 6 Icon](../../assets/images/myriad/oscmodel6.jpg)
+## (6) Piranha
 
-A variant of the triangle model,using an intervention into the delta-sigma modulation feedback lopp to modulate tone.
+The name will make sense when you see the waveform: a triangle wave with a secondary triangle sub-oscillator running at a higher rate.  The sub-oscillator creates teeth within the triangle envelope, adding harmonics that ride on top of the triangle's natural −12 dB/octave rolloff.
 
-***&#x03F5;*** scales delta-sigma modulation error feedback, creating tonal variations.
+***&#x03F5;*** controls the number of teeth created by the sub-oscillator  — low numbers give a gentle shimmer, high numbers give a dense, bright texture and bite. 
 
-## (7) Slide
+![Piranha spectrum](../../assets/images/myriad/waveforms/oscmodel6.png)
 
-![Oscillator Model 7 Icon](../../assets/images/myriad/oscmodel7.jpg)
+## (7) Parasine
 
-This is a variant of a pulse generator.  It uses a sliding window within a data buffer to determine a set of pulse widths which make up a waveform.
+A parabolic approximation of a sine wave oscillator.
 
-***&#x03F5;*** The position of the sliding window.  Moving this parameter is a bit like tuning an analog radio; the oscillator will move through a range of tonal changes as you move the knob.
+***&#x03F5;*** applies waveshaping, adding subtle harmonics.
 
-## (8) Chirp
+![Parasine spectrum](../../assets/images/myriad/waveforms/oscmodel7.png)
 
-![Oscillator Model 8 Icon](../../assets/images/myriad/oscmodel8.jpg)
+## (8) Formant
 
-Chirp creates waveforms using sets of exponentially decaying pulses streams.  This model does not tune well across larger frequency gaps.
+An oscillator with voice-like harmonics
 
-***&#x03F5;*** changes the relative length of these pulses.
+***&#x03F5;*** varies from 'ahh' to 'ooo' tonality.
 
-## (9) Multipulse-4
+![Formant spectrum](../../assets/images/myriad/waveforms/oscmodel8.png)
 
-![Oscillator Model 9 Icon](../../assets/images/myriad/oscmodel9.jpg)
+## (9) Metallic
 
-A variant of the multipulse model, with a smaller amount of sub-pulses.
+FM style metallic sounds
 
-***&#x03F5;*** varies pulse width.
+***&#x03F5;*** increases inharmonic partials.
 
-## (10) Low Frequency Noise
+![Metallic spectrum](../../assets/images/myriad/waveforms/oscmodel9.png)
 
-![Oscillator Model 10 Icon](../../assets/images/myriad/oscmodel10.jpg)
+## (10) Random Walk Noise
 
-Generates pulse waveforms with randomised pulse width, which creates low-frequency noise.
+Generates varied types of noise, using a model of a random walk.
 
-***&#x03F5;*** varies the maximimum length of the randomised pulse width.
+***Frequency*** changes the speed of the random generator, and the balance of low and high frequencies in the noise.
+
+***&#x03F5;*** changes the type of noise.  This control is a bit like tuning a radio; it moves through different sounds from pops and crackles to whistles to full frequency noise.
+
+![Noise spectrum](../../assets/images/myriad/waveforms/oscmodel10.png)
 
 ## (11) Bitnoise
 
-![Oscillator Model 11 Icon](../../assets/images/myriad/oscmodel11.jpg)
-
-A noise generator with variable tone.  Sounds vary from white(ish) noise to occasional pops and crackles.  This model can be fairly quiet, so it's worth using the shaped outputs for extra gain.
+A noise generator with variable tone.  Sounds vary from white(ish) noise to occasional pops and crackles.
 
 ***&#x03F5;*** controls the probability of small changes in a bitstream.
 
 ***Frequency*** controls the probability of large changes in a bitstream.
 
-
+![Bitnoise spectrum](../../assets/images/myriad/waveforms/oscmodel11.png)
 
 ## (12) Silence
 
-![Oscillator Model 12 Icon](../../assets/images/myriad/oscmodel12.jpg)
-
 This setting switches off the oscillator bank.  Use this to create thinner sounds.
+
+![Silence](../../assets/images/myriad/waveforms/oscmodel12.png)
 
 
 # Bitwave Synthesis
 
 This is a collection of methods that involve the manipulation of high-frequency binary pulse streams (streams of zeros and ones) which are generated on microcontrollers, and then converted into waveforms using analog circuitry.  The density of the binary streams correlates with the amplitude of the analog waveform.
 
-Bitwave synthesis works at high frequencies, between 1MHz and 16 MHz.  This means that you can avoid artefacts that you might get from digital oscillators, because any digital noise is pushed far above human hearing range, and then removed with analog filtering.  This method also benefits from very high timing and frequency precision.
-
 The collection of methods fall under these categories:
 
 ## Variations on delta-sigma modulation
 
-Delta-sigma modulation (DSM) uses an accumulator with feedback to create pulse streams.  You can use this to accurately create waveforms (e.g. the saw and pulse oscillators). You can also play with the feedback look in various ways to change the tone of the waveforms (e.g. sharktooth and trifb models).
-
-## Pulse templates
-
-These methods use a data buffer which spoecifies the width of half or full pulse waves.  The data in these buffers can be manipulated in various ways to change the tone of the oscillator (e.g. the slide model)
+Delta-sigma modulation (DSM) uses an accumulator with feedback to create pulse streams.  You can use this to accurately create waveforms (e.g. the saw and pulse oscillators), with either numerical calculation or wavetables. 
 
 ## Chirp models
 
-These methods use a state machine that generates chirps: pulse streams whose wavelength decays exponentially.  These pulses can be sequenced to create waveforms.
+These methods generate sequences of tiny chirps (pulse patterns) that vary over time.  These pulses can be sequenced to create waveforms.
+
+## Noise models
+
+Noise methods use different approaches to random generation of pulse streams.
 
 ## Technical Details
 
-Bitwave models run on RP2xxx microcontrollers, taking advantage of the *programmable IO* state machines to generate bitstreams at high frequencies.  The models run in a callback loop, using DMA to feed buffered data into the state machines.  The models vary in speed, depending on how CPU-intensive it is to calculate the buffers.  Each microcontroller core can run three of these models.  Myriad has four cores, but one is saved for non-synthesis tasks: running the meta-modulators, reading the ADCs and drawing the screen.
+Bitwave models run on RP2xxx microcontrollers, taking advantage of the *programmable IO* state machines to generate bitstreams at high frequencies.  The models run in a callback loop, using DMA to feed buffered data into the state machines. Buffers are around 250-500 microseconds long.  The models vary in speed, depending on how CPU-intensive it is to calculate the buffers.  Each microcontroller core can run three of these models.  Myriad has four cores, but one is saved for non-synthesis tasks: running the meta-modulators and drawing the screen.
 

@@ -116,7 +116,15 @@ Each oscillator model might react in a different manner to this control. See [os
 
 ### Interval
 
-This control changes how the pitch of the oscillators is spread across octaves.  At zero, there is no modification.  As you move the control away from zero, you move across sixteen different settings, which are different combinations of how the oscillators spread in pitch.  The mappings are designed to spread octaves within each oscillator bank, and also across the banks.
+This control changes how the pitch of the oscillators is spread across octaves, relative to the fundamental frequency set by the 1V/Oct control.  All three oscillators in each bank will always share the same interval setting. This allows you to build up sounds with different tonality in each octave.
+
+In the central position, there is no modification.  As you move the control left or right, you move across different settings, which are different combinations of how the oscillators spread in pitch.  
+
+![Octave Mappings](../../assets/images/myriad/octaves.jpg)
+
+To the left of centre, the mappings spread lower and then higher compared to the fundamental.  To the right of centre, the mappings spread out in both directions from the fundamental.
+
+
 
 ## Waveshaping and Overdrive
 

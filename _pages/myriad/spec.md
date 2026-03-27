@@ -42,11 +42,11 @@ toc_sticky: true
 
 ### Microcontrollers
 
-Two ELI2040c boards, each with a dual core RP2040 processor running at 200 MHz
+Two ELI2040c boards, each with a dual core RP2040 processor running at 250 MHz
 
 ### Analog / Digital Conversion
 
-4 ADC inputs, 12 bit resolution @ 100 Hz
+4 ADC inputs, 12-bit resolution
 
 
 
