@@ -2,3 +2,7 @@ _site
 .sass-cache
 .jekyll-metadata
 Gemfile.lock
+assets/video/myriad/drone.mp4
+.gitignore
+assets/video/myriad/sequenced.mp4
+assets/video/myriad/metamods.mp4
