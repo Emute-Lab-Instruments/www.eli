@@ -7,28 +7,37 @@ toc: true
 toc_sticky: true
 ---
 
-# Models
 
 Myriad has a selection of *oscillator models*; each one is driven by a digital algorithm, using Bitwave Synthesis. Bitwave is a collection of methods for creating high-frequency streams of binary patterns, that are converted into sound using analog circuitry.  Each model has two paramters of control: frequency and ***&#x03F5;***.  The ***&#x03F5;*** parameter creates tonal changes, and works in a different way with each model.  
 
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/lJBrkULPvJM?si=Jw99--LgZThrmn5r&amp;start=500" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ## (0) Saw
 
 Generates a saw wave with variable pulse width.
 
-***&#x03F5;*** controls the pulse width of the saw wave, from around 20% of wavelength to 0.25%, moving from a full sound to a thiner sound.
+***&#x03F5;*** controls the pulse width of the saw wave, from around 25% of wavelength to 0.25%, moving from a full sound to a thiner sound.
 
 ![Saw spectrum](../../assets/images/myriad/waveforms/oscmodel0.png)
+
+{% include spectro_player.html
+   files  = "../../assets/audio/myriad/myriad_saw.ogg|Saw Model"
+   height = "300"
+   color  = "ffaa00"
+%}
 
 ## (1) Chirp
 
 The Chirp oscillator creates sound with sequences of tiny pulses.
 
-***&#x03F5;*** controls how the width and frequency of the pulses changes, creating tonal variations.
+***&#x03F5;*** controls how the spread and frequency of the pulses changes, creating tonal variations.
 
 ![Chirp spectrum](../../assets/images/myriad/waveforms/oscmodel1.png)
+
+{% include spectro_player.html
+   files  = "../../assets/audio/myriad/myriad_chirp.ogg|Chirp Model"
+   height = "300"
+   color  = "ffaa00"
+%}
 
 ## (2) Sharkteeth
 
@@ -38,6 +47,13 @@ Multiple sawtooth ramps enveloped by a square wave.
 
 ![Sharkteeth spectrum](../../assets/images/myriad/waveforms/oscmodel2.png)
 
+
+{% include spectro_player.html
+   files  = "../../assets/audio/myriad/myriad_sharkteeth.ogg|Sharkteeth Model"
+   height = "300"
+   color  = "ffaa00"
+%}
+
 ## (3) Pulse
 
 A pulse wave.
@@ -45,6 +61,12 @@ A pulse wave.
 ***&#x03F5;*** controls the pulse width.
 
 ![Pulse spectrum](../../assets/images/myriad/waveforms/oscmodel3.png)
+
+{% include spectro_player.html
+   files  = "../../assets/audio/myriad/myriad_pulse.ogg|Pulse Model"
+   height = "300"
+   color  = "ffaa00"
+%}
 
 ## (4) Resonant Chirp
 
@@ -54,11 +76,23 @@ A variation of the chirp model, with a more resonant tone.
 
 ![Resonant Chirp spectrum](../../assets/images/myriad/waveforms/oscmodel4.png)
 
+{% include spectro_player.html
+   files  = "../../assets/audio/myriad/myriad_resochirp.ogg|Resonant Chirp Model"
+   height = "300"
+   color  = "ffaa00"
+%}
+
 ## (5) Triangle
 
 ***&#x03F5;*** varies the position of the peak point of the triangle.
 
 ![Triangle spectrum](../../assets/images/myriad/waveforms/oscmodel5.png)
+
+{% include spectro_player.html
+   files  = "../../assets/audio/myriad/myriad_tri.ogg|Triangle Model"
+   height = "300"
+   color  = "ffaa00"
+%}
 
 ## (6) Piranha
 
@@ -68,6 +102,12 @@ The name will make sense when you see the waveform: a triangle wave with a secon
 
 ![Piranha spectrum](../../assets/images/myriad/waveforms/oscmodel6.png)
 
+{% include spectro_player.html
+   files  = "../../assets/audio/myriad/myriad_piranha.ogg|Piranha Model"
+   height = "300"
+   color  = "ffaa00"
+%}
+
 ## (7) Parasine
 
 A parabolic approximation of a sine wave oscillator.
@@ -75,6 +115,12 @@ A parabolic approximation of a sine wave oscillator.
 ***&#x03F5;*** applies waveshaping, adding subtle harmonics.
 
 ![Parasine spectrum](../../assets/images/myriad/waveforms/oscmodel7.png)
+
+{% include spectro_player.html
+   files  = "../../assets/audio/myriad/myriad_parasine.ogg|Parasine Model"
+   height = "300"
+   color  = "ffaa00"
+%}
 
 ## (8) Formant
 
@@ -84,6 +130,12 @@ An oscillator with voice-like harmonics
 
 ![Formant spectrum](../../assets/images/myriad/waveforms/oscmodel8.png)
 
+{% include spectro_player.html
+   files  = "../../assets/audio/myriad/myriad_formant.ogg|Formant Model"
+   height = "300"
+   color  = "ffaa00"
+%}
+
 ## (9) Metallic
 
 FM style metallic sounds
@@ -91,6 +143,12 @@ FM style metallic sounds
 ***&#x03F5;*** increases inharmonic partials.
 
 ![Metallic spectrum](../../assets/images/myriad/waveforms/oscmodel9.png)
+
+{% include spectro_player.html
+   files  = "../../assets/audio/myriad/myriad_metallic.ogg|Metallic Model"
+   height = "300"
+   color  = "ffaa00"
+%}
 
 ## (10) Random Walk Noise
 
@@ -102,6 +160,12 @@ Generates varied types of noise, using a model of a random walk.
 
 ![Noise spectrum](../../assets/images/myriad/waveforms/oscmodel10.png)
 
+{% include spectro_player.html
+   files  = "../../assets/audio/myriad/myriad_randomwalk.ogg|Random Walk Noise Model"
+   height = "300"
+   color  = "ffaa00"
+%}
+
 ## (11) Bitnoise
 
 A noise generator with variable tone.  Sounds vary from white(ish) noise to occasional pops and crackles.
@@ -112,11 +176,17 @@ A noise generator with variable tone.  Sounds vary from white(ish) noise to occa
 
 ![Bitnoise spectrum](../../assets/images/myriad/waveforms/oscmodel11.png)
 
+{% include spectro_player.html
+   files  = "../../assets/audio/myriad/myriad_bitnoise.ogg|Bitnoise Model"
+   height = "300"
+   color  = "ffaa00"
+%}
+
 ## (12) Silence
 
-This setting switches off the oscillator bank.  Use this to create thinner sounds.
+This setting switches off the oscillator bank.  Use this to create thinner sounds by switching off banks so that you use less oscillators in the final mix.
 
-![Silence](../../assets/images/myriad/waveforms/oscmodel12.png)
+<!-- ![Silence](../../assets/images/myriad/waveforms/oscmodel12.png) -->
 
 
 # Bitwave Synthesis

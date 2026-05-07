@@ -79,7 +79,6 @@ flowchart TB
 
 ![Myriad IO](../../assets/images/myriad/MyriadIO.jpg)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/lJBrkULPvJM?si=x-XDMoFenU2TlPGc&amp;start=415" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ## Outputs
 
@@ -173,12 +172,6 @@ flowchart TB
         modmode["Modulation Mode"]
         modd["Modulation Depth"]
   end
- subgraph quantise["Quantise"]
-    direction TB
-        quan["Quantise Screen"]
-        tpull["Pull"]
-        tnotes["Notes"]
-  end
  subgraph utility["Utility"]
         util["Utility Screen"]
         save["Save"]
@@ -191,10 +184,6 @@ flowchart TB
     tun -- Y --o tsemi
     tun -- Z --o tcent
     tun -- X --x pbypass
-    tun -- Y ----x quan
-    quan -- X --x tun
-    quan -- X --o tpull
-    quan -- Y --o tnotes
     A -- X --o osc1
     A -- Y --o osc2
     A -- Z --o osc3
@@ -219,7 +208,6 @@ flowchart TB
      B:::defc
      modmode:::defc
      modd:::defc
-     quan:::defc
      tpull:::defc
      tnotes:::defc
      util:::defc
@@ -255,13 +243,12 @@ This shows information on the currently selected oscillator models for each bank
 
 Each meta-modulator shows a visualisation of its algorithm.  Rotating `X` changes the speed and possibly other variables of the algorithm. Rotating `Z` changes the depth of modulation.
 
-# Tuning and Quantisation
+# Tuning 
 
-Tuning is centred on C1 at 0V, and is sensitive in a 10V range from C-4 to C6.  Not all oscillator models will be able to reach the outer limits of this range.  
+Tuning is centred on C1 at 0V, and is sensitive in a 10V range from C-4 to C6. 
 
-Incoming control voltages are attenuverted, so if the incoming pitch range is centred around 0V, then the attenuverter will be able effectively invert and scale pitch CV.  If the voltage range is not centred around 0V, this will skew the effects of the attenuverter. Either way,  if the attenverter is set all the way to 100%, then the incoming pitch CV will be directly reflected in the frequency control of the oscillators.
+Incoming control voltages are attenuverted, so if the incoming pitch range is centred around 0V, then the attenuverter will be able effectively invert and scale pitch CV.  If the voltage range is not centred around 0V, this will skew the effects of the attenuverter. Either way,  if the attenverter is set all the way to 100%, then the incoming pitch CV will be directly reflected in the frequency of the oscillators.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/lJBrkULPvJM?si=SFfS5rv0OIXlf6O_&amp;start=415" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ![Tuning Screen](../../assets/images/myriad/tuning.jpg)
 
@@ -271,17 +258,17 @@ The tuning screen allows adjustment of octaves, semitones and cents.  These sett
 
 When exiting the Tuning screen, the settings are saved to flash memory and will persist after power cycles.  While saving there may be a small audio pause while the processor writes the data.
 
-## Quantisation
+<!-- ## Quantisation
 
 ![Quantise Screen](../../assets/images/myriad/quantise.jpg)
 
 Press `Y` to enter Quantisation and `X` to then return to Tuning mode.
 
-The quantisation screen has two controls: `pull` and `notes`.  `pull` moves between 0% and 100%. If set to more than zero, then the incoming frequency control will be quantised towards the nearest note.  This nearest note is determined by the setting `notes` which sets the number of notes in an octave.  Conventionally this is 12 notes for western tuning, but you can experiment with other settings to give microtonal tunings, or coarse tunings with fewer notes per octave. All quantisations use equal-temprament.
+The quantisation screen has two controls: `pull` and `notes`.  `pull` moves between 0% and 100%. If set to more than zero, then the incoming frequency control will be quantised towards the nearest note.  This nearest note is determined by the setting `notes` which sets the number of notes in an octave.  Conventionally this is 12 notes for western tuning, but you can experiment with other settings to give microtonal tunings, or coarse tunings with fewer notes per octave. All quantisations use equal-temprament. -->
 
 # Stereo Image
 
-Myriad takes an unconventional approach to stereo imaging: the stereo field is created by tonal differences and intermodulation between the nine oscillators, and by analog sound processing.  Four oscillators are sent to the left channel, and the remaining five to the right.  With `spread` and `interval` controls set to 0, and all three banks set to the same model, the image will be effectively mono. As the differnces across the models widens, so might the stereo image.   The stereo image can be influenced as follows:
+Myriad takes an unconventional approach to stereo imaging: the stereo field is created by tonal differences and intermodulation between the nine oscillators, and by analog sound processing.  Four oscillators are sent to the left channel, and the remaining five to the right.  With `spread` and `interval` controls set to 0, and all three banks set to the same model, the image will be effectively mono. As the differences across the models widens, so might the stereo image.   The stereo image can be influenced as follows:
 
 ## Use a mixture of oscillator models
 

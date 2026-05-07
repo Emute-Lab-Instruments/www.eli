@@ -1,0 +1,65 @@
+{% comment %}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SPECTRO VIDEO — embeddable video player with visualiser
+  Place this file at: _includes/spectro_video.html
+  Place player at:    assets/spectro/video.html
+
+  USAGE
+  ─────
+  {% include spectro_video.html
+     files     = "/assets/video/piece1.mp4|Piece I, /assets/video/piece2.mp4|Piece II"
+     width     = "100%"
+     height    = "700"
+     vizheight = "200"
+     color     = "00ff88"
+  %}
+
+  FILE PATHS
+  ──────────
+  Always use paths relative to the site root, starting with /assets/...
+  Do NOT use ../ relative paths or include the baseurl prefix —
+  the include adds site.baseurl automatically.
+
+  PARAMETERS
+  ──────────
+  files      (required)
+             Comma-separated video paths. Append |Title for display name.
+             Supports any browser-native format: MP4 (H.264), WebM, OGG.
+
+  width      (default: 100%)   iframe width
+  height     (default: 600)    total iframe height in px
+  vizheight  (default: 200)    height in px of the oscilloscope+spectrum canvas
+  color      (default: 00ff88) phosphor hex colour without #
+  split      (default: 38)     % of vizheight used by oscilloscope (15–75)
+  omode      (default: lr)     lr | l | r | sum | liss
+  smode      (default: bars)   bars | line | fill | mirror
+  fscale     (default: log)    log | lin
+  fft        (default: 2048)   512 | 1024 | 2048 | 4096 | 8192
+  smooth     (default: 0.8)    0–0.99
+  floor      (default: -90)    dB noise floor
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% endcomment %}
+
+{% assign _sv_width     = include.width     | default: "100%" %}
+{% assign _sv_height    = include.height    | default: 600 %}
+{% assign _sv_vizheight = include.vizheight | default: 200 %}
+{% assign _sv_color     = include.color     | default: "00ff88" %}
+{% assign _sv_split     = include.split     | default: 38 %}
+{% assign _sv_omode     = include.omode     | default: "lr" %}
+{% assign _sv_smode     = include.smode     | default: "bars" %}
+{% assign _sv_fscale    = include.fscale    | default: "log" %}
+{% assign _sv_fft       = include.fft       | default: 2048 %}
+{% assign _sv_smooth    = include.smooth    | default: "0.8" %}
+{% assign _sv_floor     = include.floor     | default: -90 %}
+
+{% assign _sv_files_enc = include.files | uri_escape %}
+{% assign _sv_baseurl = site.baseurl | default: "" %}
+
+<iframe
+  src="{{ '/assets/spectro/video.html' | relative_url }}?files={{ _sv_files_enc }}&baseurl={{ _sv_baseurl }}&vizheight={{ _sv_vizheight }}&color={{ _sv_color }}&split={{ _sv_split }}&omode={{ _sv_omode }}&smode={{ _sv_smode }}&fscale={{ _sv_fscale }}&fft={{ _sv_fft }}&smooth={{ _sv_smooth }}&floor={{ _sv_floor }}"
+  width="{{ _sv_width }}"
+  height="{{ _sv_height }}"
+  frameborder="0"
+  scrolling="no"
+  allow="autoplay"
+  style="display:block;border:none;max-width:100%;"></iframe>
