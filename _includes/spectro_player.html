@@ -1,0 +1,85 @@
+{% comment %}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  SPECTRO — embeddable audio visualiser
+  Place this file at: _includes/spectro_player.html
+  Place player at:    assets/spectro/player.html
+
+  USAGE
+  ─────
+  {% include spectro_player.html
+     files  = "/audio/track1.mp3|My Track, /audio/track2.mp3|Another"
+     width  = "100%"
+     height = "500"
+     color  = "00ff88"
+  %}
+
+  PARAMETERS
+  ──────────
+  files   (required)
+          Comma-separated audio paths. Append |Title after each path
+          to set a display name. Paths are relative to the site root
+          and should start with /. Supports MP3, WAV, FLAC, OGG, M4A.
+          Example: "/audio/piece1.mp3|Piece I, /audio/piece2.mp3|Piece II"
+
+  width   (default: 100%)
+          iframe width. Use px or % values.
+
+  height  (default: 480)
+          Total iframe height in pixels, including the ~42px header bar.
+          So canvas height ≈ height − 42.
+
+  color   (default: 00ff88)
+          Phosphor colour as hex WITHOUT the #. Examples: ff8800, 00ddff.
+
+  split   (default: 38)
+          Percentage of canvas height used by the oscilloscope (15–75).
+
+  omode   (default: lr)
+          Oscilloscope mode: lr | l | r | sum | liss
+
+  smode   (default: bars)
+          Spectrum style: bars | line | fill | mirror
+
+  fscale  (default: log)
+          Frequency axis: log | lin
+
+  fft     (default: 2048)
+          FFT size: 512 | 1024 | 2048 | 4096 | 8192
+
+  smooth  (default: 0.8)
+          Spectrum smoothing 0.0–0.99.
+
+  floor   (default: -90)
+          Spectrum noise floor in dB (e.g. -90, -60).
+
+  NOTES
+  ─────
+  • Audio files must be served from the same origin as your Jekyll site
+    (or have CORS headers if from a CDN/external host).
+  • The player never auto-plays; the listener must press PLAY.
+  • If more than one file is listed, a dropdown track selector appears.
+  • All visual settings are also accessible via the ⚙ button inside the player.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% endcomment %}
+
+{% assign _sp_width  = include.width  | default: "100%" %}
+{% assign _sp_height = include.height | default: 480 %}
+{% assign _sp_color  = include.color  | default: "00ff88" %}
+{% assign _sp_split  = include.split  | default: 38 %}
+{% assign _sp_omode  = include.omode  | default: "lr" %}
+{% assign _sp_smode  = include.smode  | default: "bars" %}
+{% assign _sp_fscale = include.fscale | default: "log" %}
+{% assign _sp_fft    = include.fft    | default: 2048 %}
+{% assign _sp_smooth = include.smooth | default: "0.8" %}
+{% assign _sp_floor  = include.floor  | default: -90 %}
+
+{% assign _sp_files_enc = include.files | uri_escape %}
+
+<iframe
+  src="{{ '/assets/spectro/player.html' | relative_url }}?files={{ _sp_files_enc }}&color={{ _sp_color }}&split={{ _sp_split }}&omode={{ _sp_omode }}&smode={{ _sp_smode }}&fscale={{ _sp_fscale }}&fft={{ _sp_fft }}&smooth={{ _sp_smooth }}&floor={{ _sp_floor }}"
+  width="{{ _sp_width }}"
+  height="{{ _sp_height }}"
+  frameborder="0"
+  scrolling="no"
+  allow="autoplay"
+  style="display:block;border:none;max-width:100%;"></iframe>

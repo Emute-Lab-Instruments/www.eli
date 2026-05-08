@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>SPECTRO VIDEO</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --p:#00ff88;--p2:rgba(0,255,136,0.15);--bg:#030608;--panel:#070d0f;
+  --bdr:rgba(0,255,136,0.12);--font:'Share Tech Mono',monospace;--head:'Orbitron',sans-serif;
+}
+html,body{width:100%;height:100%;background:var(--bg);color:var(--p);
+  font-family:var(--font);overflow:hidden}
+#app{width:100%;height:100%;display:flex;flex-direction:column}
+
+/* ── Header ── */
+#hdr{display:flex;align-items:center;gap:7px;padding:5px 10px;
+  background:var(--panel);border-bottom:1px solid var(--bdr);
+  flex-shrink:0;flex-wrap:wrap;min-height:42px}
+#track-wrap{display:flex;align-items:center;gap:6px;flex-shrink:0;max-width:220px}
+#tsel{background:var(--bg);border:1px solid var(--bdr);color:var(--p);
+  font-family:var(--font);font-size:.65rem;padding:3px 6px;cursor:pointer;max-width:200px}
+#fname{font-size:.65rem;opacity:.9;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;max-width:200px}
+#transport{display:flex;gap:5px;flex-shrink:0}
+.btn{background:none;border:1px solid var(--p);color:var(--p);
+  font-family:var(--font);font-size:.63rem;padding:4px 9px;
+  cursor:pointer;letter-spacing:.07em;transition:all .12s;white-space:nowrap}
+.btn:hover{background:var(--p2)}
+.btn.on{background:var(--p);color:var(--bg)}
+#scwrap{flex:1;min-width:60px;display:flex;align-items:center;gap:6px}
+#scrub{-webkit-appearance:none;appearance:none;width:100%;height:2px;
+  background:var(--bdr);outline:none;cursor:pointer}
+#scrub::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;
+  background:var(--p);border-radius:50%}
+#scrub::-moz-range-thumb{width:10px;height:10px;background:var(--p);
+  border:none;border-radius:50%}
+#tdis{font-size:.6rem;opacity:.6;white-space:nowrap;min-width:72px;text-align:center}
+
+/* ── Video area ── */
+#video-wrap{flex:1;background:#000;display:flex;align-items:center;
+  justify-content:center;overflow:hidden;position:relative;min-height:0}
+#vid{width:100%;height:100%;object-fit:contain;display:block}
+#st{position:absolute;bottom:8px;left:10px;font-size:.58rem;
+  opacity:.4;pointer-events:none;letter-spacing:.1em}
+#loadbar{position:absolute;top:0;left:0;height:2px;background:var(--p);
+  width:0;transition:width .15s;display:none}
+
+/* ── Visualiser ── */
+#va{position:relative;flex-shrink:0;overflow:hidden}
+#va canvas{display:block;width:100%;height:100%}
+#scanlines{position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,
+  rgba(0,0,0,.07) 2px,rgba(0,0,0,.07) 4px);z-index:2}
+
+/* ── Settings ── */
+#sg-btn{position:absolute;right:8px;top:8px;z-index:10}
+#sp{position:absolute;right:0;top:0;bottom:0;width:224px;
+  background:var(--panel);border-left:1px solid var(--bdr);
+  padding:10px 12px;overflow-y:auto;transform:translateX(100%);
+  transition:transform .22s ease;z-index:9;font-size:.67rem}
+#sp.open{transform:translateX(0)}
+.sg{margin-bottom:12px;border-bottom:1px solid var(--bdr);padding-bottom:12px}
+.sg:last-child{border-bottom:none}
+.sgh{font-family:var(--head);font-size:.52rem;letter-spacing:.2em;opacity:.4;margin-bottom:7px}
+.sl{display:block;font-size:.57rem;opacity:.48;letter-spacing:.08em;margin-bottom:2px}
+.sr{display:flex;align-items:center;gap:5px;margin-bottom:5px}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:2px;
+  background:var(--bdr);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:9px;height:9px;
+  background:var(--p);border-radius:50%}
+input[type=range]::-moz-range-thumb{width:9px;height:9px;background:var(--p);
+  border:none;border-radius:50%}
+input[type=color]{-webkit-appearance:none;width:26px;height:17px;
+  border:1px solid var(--bdr);background:none;cursor:pointer;padding:0}
+select.sg-sel{background:var(--bg);border:1px solid var(--bdr);color:var(--p);
+  font-family:var(--font);font-size:.63rem;padding:3px 5px;cursor:pointer;width:100%}
+.vd{min-width:28px;text-align:right;font-size:.58rem;opacity:.7;flex-shrink:0}
+#presets{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
+.pdot{width:16px;height:16px;border-radius:50%;cursor:pointer;
+  border:2px solid transparent;transition:border-color .12s;flex-shrink:0}
+.pdot.on{border-color:#fff}
+input[type=checkbox]{accent-color:var(--p);cursor:pointer}
+</style>
+</head>
+<body>
+<div id="app">
+
+<div id="hdr">
+  <img src="https://www.emutelabinstruments.co.uk/assets/images/ELI%20Pic%20A.jpg" alt=""
+    style="height:28px;width:auto;object-fit:contain;flex-shrink:0;display:block;padding-right:6px;border-right:1px solid var(--bdr)">
+  <div id="track-wrap">
+    <select id="tsel" style="display:none"></select>
+    <div id="fname">—</div>
+  </div>
+  <div id="transport">
+    <button class="btn" id="bplay">▶ PLAY</button>
+    <button class="btn" id="bstop">■ STOP</button>
+  </div>
+  <div id="scwrap">
+    <input type="range" id="scrub" min="0" max="10000" value="0">
+    <div id="tdis">0:00 / 0:00</div>
+  </div>
+</div>
+
+<div id="video-wrap">
+  <video id="vid" preload="metadata" playsinline></video>
+  <div id="st">NO VIDEO CONFIGURED</div>
+  <div id="loadbar"></div>
+</div>
+
+<div id="va">
+  <canvas id="mc"></canvas>
+  <div id="scanlines"></div>
+  <button class="btn" id="sg-btn">⚙</button>
+
+  <div id="sp">
+    <div class="sgh">COLOUR</div>
+    <div class="sg">
+      <div id="presets"></div>
+      <div class="sr">
+        <span class="sl" style="flex:1">CUSTOM</span>
+        <input type="color" id="ccol" value="#00ff88">
+      </div>
+    </div>
+
+    <div class="sg">
+      <div class="sgh">OSCILLOSCOPE</div>
+      <div class="sr"><span class="sl" style="white-space:nowrap;margin-bottom:0">MODE</span>
+        <select class="sg-sel" id="omode">
+          <option value="lr">L + R</option>
+          <option value="l">LEFT</option>
+          <option value="r">RIGHT</option>
+          <option value="sum">SUM (MONO)</option>
+          <option value="liss">LISSAJOUS</option>
+        </select>
+      </div>
+      <label class="sl">ZOOM</label>
+      <div class="sr"><input type="range" id="ozoom" min="0.5" max="8" step="0.1" value="1"><span class="vd" id="ozoomv">1.0×</span></div>
+      <label class="sl">PERSISTENCE</label>
+      <div class="sr"><input type="range" id="oper" min="0" max="0.97" step="0.01" value="0.3"><span class="vd" id="operv">0.30</span></div>
+      <label class="sl">LINE WIDTH</label>
+      <div class="sr"><input type="range" id="olw" min="0.5" max="5" step="0.1" value="1.5"><span class="vd" id="olwv">1.5</span></div>
+      <label class="sl">GLOW</label>
+      <div class="sr"><input type="range" id="oglow" min="0" max="40" step="1" value="14"><span class="vd" id="oglowv">14</span></div>
+    </div>
+
+    <div class="sg">
+      <div class="sgh">SPECTRUM</div>
+      <div class="sr"><span class="sl" style="white-space:nowrap;margin-bottom:0">STYLE</span>
+        <select class="sg-sel" id="smode">
+          <option value="bars">BARS</option>
+          <option value="line">LINE</option>
+          <option value="fill">FILLED</option>
+          <option value="mirror">STEREO MIRROR</option>
+        </select>
+      </div>
+      <div class="sr"><span class="sl" style="white-space:nowrap;margin-bottom:0">FFT</span>
+        <select class="sg-sel" id="fftsel">
+          <option value="512">512</option>
+          <option value="1024">1024</option>
+          <option value="2048" selected>2048</option>
+          <option value="4096">4096</option>
+          <option value="8192">8192</option>
+        </select>
+      </div>
+      <label class="sl">SMOOTHING</label>
+      <div class="sr"><input type="range" id="ssm" min="0" max="0.99" step="0.01" value="0.8"><span class="vd" id="ssmv">0.80</span></div>
+      <div class="sr"><span class="sl" style="white-space:nowrap;margin-bottom:0">FREQ SCALE</span>
+        <select class="sg-sel" id="fscale">
+          <option value="log">LOG</option>
+          <option value="lin">LINEAR</option>
+        </select>
+      </div>
+      <label class="sl">FLOOR (dB)</label>
+      <div class="sr"><input type="range" id="sfloor" min="-120" max="-30" step="5" value="-90"><span class="vd" id="sfloorv">−90</span></div>
+    </div>
+
+    <div class="sg">
+      <div class="sgh">LAYOUT</div>
+      <div class="sr"><span class="sl" style="flex:1">SCANLINES</span><input type="checkbox" id="csl" checked></div>
+      <div class="sr"><span class="sl" style="flex:1">GRID</span><input type="checkbox" id="cgrid" checked></div>
+      <label class="sl">OSC HEIGHT</label>
+      <div class="sr"><input type="range" id="split" min="15" max="75" step="1" value="38"><span class="vd" id="splitv">38%</span></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+// ── URL params ────────────────────────────────────────────────────────────
+const P=new URLSearchParams(location.search);
+const pColor=P.get('color')||'00ff88';
+
+const cfg={
+  color: pColor.startsWith('#')?pColor:'#'+pColor,
+  oscMode:  P.get('omode')  ||'lr',
+  oscZoom:  parseFloat(P.get('zoom')   ||'1'),
+  oscPer:   parseFloat(P.get('per')    ||'0.3'),
+  oscLW:    parseFloat(P.get('lw')     ||'1.5'),
+  oscGlow:  parseFloat(P.get('glow')   ||'14'),
+  specMode: P.get('smode')  ||'bars',
+  fftSize:  parseInt(P.get('fft')      ||'2048'),
+  smooth:   parseFloat(P.get('smooth') ||'0.8'),
+  fscale:   P.get('fscale') ||'log',
+  floor:    parseInt(P.get('floor')    ||'-90'),
+  scanlines:true, grid:true,
+  split:    parseInt(P.get('split')||'38')/100,
+};
+
+// vizheight: explicit canvas height in px (default 200)
+const VIZ_H = parseInt(P.get('vizheight')||'200');
+
+const tracksRaw=P.get('files')||'';
+const baseurl=P.get('baseurl')||'';
+const tracks=tracksRaw?tracksRaw.split(',').map(s=>{
+  const [path,title]=s.trim().split('|');
+  const p=path.trim();
+  return {path: baseurl+p, title:(title||'').trim()||p.split('/').pop()};
+}):[];
+
+// ── State ─────────────────────────────────────────────────────────────────
+let audioCtx=null, analL=null, analR=null;
+let mediaSourceNode=null;  // createMediaElementSource — only once per vid element
+let animId=null, scrubbing=false, isPlaying=false;
+
+const $=id=>document.getElementById(id);
+const vid=$('vid');
+const mc=$('mc'), ctx2d=mc.getContext('2d');
+const va=$('va');
+
+// ── Set visualiser height ─────────────────────────────────────────────────
+va.style.height=VIZ_H+'px';
+
+// ── Apply colour ──────────────────────────────────────────────────────────
+applyColor(cfg.color);
+function applyColor(c){
+  cfg.color=c;
+  document.documentElement.style.setProperty('--p',c);
+  const r=parseInt(c.slice(1,3),16),g=parseInt(c.slice(3,5),16),b=parseInt(c.slice(5,7),16);
+  document.documentElement.style.setProperty('--p2',`rgba(${r},${g},${b},0.15)`);
+  document.documentElement.style.setProperty('--bdr',`rgba(${r},${g},${b},0.12)`);
+}
+
+// ── Sync UI ───────────────────────────────────────────────────────────────
+function syncUI(){
+  $('ccol').value=cfg.color;
+  $('omode').value=cfg.oscMode;
+  $('ozoom').value=cfg.oscZoom; $('ozoomv').textContent=cfg.oscZoom.toFixed(1)+'×';
+  $('oper').value=cfg.oscPer;   $('operv').textContent=cfg.oscPer.toFixed(2);
+  $('olw').value=cfg.oscLW;     $('olwv').textContent=cfg.oscLW.toFixed(1);
+  $('oglow').value=cfg.oscGlow; $('oglowv').textContent=Math.round(cfg.oscGlow);
+  $('smode').value=cfg.specMode;
+  $('fftsel').value=String(cfg.fftSize);
+  $('ssm').value=cfg.smooth;    $('ssmv').textContent=cfg.smooth.toFixed(2);
+  $('fscale').value=cfg.fscale;
+  $('sfloor').value=cfg.floor;  $('sfloorv').textContent=Math.round(cfg.floor)+'';
+  $('split').value=Math.round(cfg.split*100); $('splitv').textContent=Math.round(cfg.split*100)+'%';
+}
+
+// ── Colour presets ────────────────────────────────────────────────────────
+const PALETTES=[
+  {n:'Green',c:'#00ff88'},{n:'Amber',c:'#ffaa00'},{n:'Cyan',c:'#00ddff'},
+  {n:'Pink',c:'#ff44cc'},{n:'White',c:'#e8e8e0'},{n:'Red',c:'#ff3344'},
+];
+const presetsEl=$('presets');
+PALETTES.forEach(p=>{
+  const d=document.createElement('div');
+  d.className='pdot'+(p.c===cfg.color?' on':'');
+  d.style.background=p.c; d.title=p.n;
+  d.onclick=()=>{
+    applyColor(p.c); $('ccol').value=p.c;
+    presetsEl.querySelectorAll('.pdot').forEach(x=>x.classList.remove('on'));
+    d.classList.add('on');
+  };
+  presetsEl.appendChild(d);
+});
+$('ccol').oninput=e=>{
+  applyColor(e.target.value);
+  presetsEl.querySelectorAll('.pdot').forEach(x=>x.classList.remove('on'));
+};
+
+// ── Settings bindings ─────────────────────────────────────────────────────
+function rng(id,key,vid2,fmt){
+  const el=$(id),vd=$(vid2);
+  el.oninput=()=>{ cfg[key]=parseFloat(el.value); if(vd) vd.textContent=fmt(cfg[key]); onCfg(key); };
+}
+function sel(id,key,cb){ $(id).onchange=e=>{ cfg[key]=e.target.value; if(cb) cb(); }; }
+function chk(id,key,cb){ $(id).onchange=e=>{ cfg[key]=e.target.checked; if(cb) cb(); }; }
+rng('ozoom','oscZoom','ozoomv',v=>v.toFixed(1)+'×');
+rng('oper','oscPer','operv',v=>v.toFixed(2));
+rng('olw','oscLW','olwv',v=>v.toFixed(1));
+rng('oglow','oscGlow','oglowv',v=>Math.round(v)+'');
+rng('ssm','smooth','ssmv',v=>v.toFixed(2));
+rng('sfloor','floor','sfloorv',v=>Math.round(v)+'');
+$('split').oninput=()=>{
+  cfg.split=parseInt($('split').value)/100;
+  $('splitv').textContent=Math.round(cfg.split*100)+'%';
+};
+sel('omode','oscMode'); sel('smode','specMode'); sel('fscale','fscale');
+sel('fftsel','fftSize',()=>{ cfg.fftSize=parseInt($('fftsel').value); applyAnal(); });
+chk('csl','scanlines',()=>{ $('scanlines').style.display=cfg.scanlines?'':'none'; });
+chk('cgrid','grid');
+function onCfg(key){ if(key==='smooth'||key==='floor') applyAnal(); }
+function applyAnal(){
+  if(!analL) return;
+  analL.fftSize=analR.fftSize=cfg.fftSize;
+  analL.smoothingTimeConstant=analR.smoothingTimeConstant=cfg.smooth;
+  analL.minDecibels=analR.minDecibels=cfg.floor;
+}
+
+$('sg-btn').onclick=()=>{ $('sp').classList.toggle('open'); $('sg-btn').classList.toggle('on'); };
+
+// ── Canvas resize ─────────────────────────────────────────────────────────
+function resizeCanvas(){
+  mc.width=va.clientWidth; mc.height=va.clientHeight;
+  drawStatic();
+}
+window.addEventListener('resize',resizeCanvas);
+
+// ── Track selector ────────────────────────────────────────────────────────
+function buildTrackUI(){
+  const sel=$('tsel'), fn=$('fname');
+  if(tracks.length===0){ fn.textContent='NO FILES CONFIGURED'; return; }
+  if(tracks.length===1){ sel.style.display='none'; fn.textContent=tracks[0].title; return; }
+  fn.style.display='none';
+  tracks.forEach((t,i)=>{
+    const o=document.createElement('option'); o.value=i; o.textContent=t.title;
+    sel.appendChild(o);
+  });
+  sel.style.display='';
+  sel.onchange=()=>loadTrack(tracks[parseInt(sel.value)]);
+}
+
+// ── Load track ────────────────────────────────────────────────────────────
+function loadTrack(track){
+  stopVid();
+  if(tracks.length===1) $('fname').textContent=track.title;
+  setStatus('');
+  vid.src=track.path;
+  vid.load();
+}
+
+function setStatus(s){ $('st').textContent=s; }
+function showLoad(pct){
+  const lb=$('loadbar');
+  if(pct===null){lb.style.display='none';return;}
+  lb.style.display=''; lb.style.width=pct+'%';
+}
+
+// ── Video events ──────────────────────────────────────────────────────────
+vid.addEventListener('loadedmetadata',()=>{
+  updTime(0); drawStatic(); setStatus('');
+});
+vid.addEventListener('timeupdate',()=>{
+  if(!scrubbing) syncScrub();
+});
+vid.addEventListener('ended',()=>{
+  isPlaying=false; $('bplay').textContent='▶ PLAY';
+});
+vid.addEventListener('progress',()=>{
+  if(vid.duration&&vid.buffered.length){
+    showLoad(Math.round(vid.buffered.end(vid.buffered.length-1)/vid.duration*100));
+  }
+});
+vid.addEventListener('canplaythrough',()=>{ showLoad(null); });
+vid.addEventListener('waiting',()=>{ showLoad(50); });
+
+function syncScrub(){
+  const d=vid.duration||0;
+  $('scrub').value=d>0?Math.round((vid.currentTime/d)*10000):0;
+  updTime(vid.currentTime);
+}
+
+// ── Audio graph (built once on first play) ────────────────────────────────
+function setupAudio(){
+  if(mediaSourceNode) return; // already connected
+  audioCtx=new AudioContext();
+  mediaSourceNode=audioCtx.createMediaElementSource(vid);
+  analL=audioCtx.createAnalyser(); analR=audioCtx.createAnalyser();
+  applyAnal(); analL.maxDecibels=analR.maxDecibels=-6;
+
+  // Split stereo; fall back to mono duplication
+  const spl=audioCtx.createChannelSplitter(2);
+  const mrg=audioCtx.createChannelMerger(2);
+  mediaSourceNode.connect(spl);
+  spl.connect(analL,0); spl.connect(analR,1);
+  analL.connect(mrg,0,0); analR.connect(mrg,0,1);
+  mrg.connect(audioCtx.destination);
+  startLoop();
+}
+
+// ── Playback ──────────────────────────────────────────────────────────────
+async function playVid(){
+  setupAudio();
+  if(audioCtx.state==='suspended') await audioCtx.resume();
+  try{
+    await vid.play();
+    isPlaying=true; $('bplay').textContent='⏸ PAUSE'; setStatus('');
+  }catch(e){ setStatus('PLAY FAILED: '+e.message); }
+}
+
+function pauseVid(){
+  vid.pause(); isPlaying=false; $('bplay').textContent='▶ PLAY';
+}
+
+function stopVid(){
+  vid.pause(); vid.currentTime=0;
+  isPlaying=false; $('bplay').textContent='▶ PLAY';
+  $('scrub').value=0; updTime(0);
+}
+
+$('bplay').onclick=()=>isPlaying?pauseVid():playVid();
+$('bstop').onclick=()=>stopVid();
+
+// ── Scrubber ──────────────────────────────────────────────────────────────
+const scrub=$('scrub');
+scrub.addEventListener('pointerdown',()=>{ scrubbing=true; });
+scrub.addEventListener('input',()=>{ updTime((parseInt(scrub.value)/10000)*(vid.duration||0)); });
+scrub.addEventListener('change',()=>{
+  scrubbing=false;
+  const t=(parseInt(scrub.value)/10000)*(vid.duration||0);
+  vid.currentTime=t; updTime(t);
+});
+
+function updTime(t){
+  const f=s=>Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
+  $('tdis').textContent=f(t)+' / '+f(vid.duration||0);
+}
+
+// ── Draw loop ─────────────────────────────────────────────────────────────
+function loop(){ animId=requestAnimationFrame(loop); frame(); }
+function startLoop(){ if(!animId) loop(); }
+
+function frame(){
+  const W=mc.width, H=mc.height;
+  const oscH=Math.round(H*cfg.split);
+  const specY=oscH, specH=H-oscH;
+  const col=cfg.color;
+
+  ctx2d.shadowBlur=0; ctx2d.shadowColor='rgba(0,0,0,0)';
+  ctx2d.shadowOffsetX=0; ctx2d.shadowOffsetY=0; ctx2d.globalAlpha=1;
+
+  const bufN=analL?analL.fftSize:2048;
+  const dL=new Uint8Array(bufN), dR=new Uint8Array(bufN);
+  if(analL){ analL.getByteTimeDomainData(dL); analR.getByteTimeDomainData(dR); }
+
+  // Oscilloscope
+  ctx2d.save();
+  ctx2d.beginPath(); ctx2d.rect(0,0,W,oscH); ctx2d.clip();
+  ctx2d.fillStyle=`rgba(3,6,8,${1-cfg.oscPer})`; ctx2d.fillRect(0,0,W,oscH);
+  if(cfg.grid) drawGrid(ctx2d,0,0,W,oscH,true,false);
+  if(cfg.oscMode==='liss') drawLiss(ctx2d,dL,dR,W,oscH,col);
+  else drawWave(ctx2d,dL,dR,W,oscH,col);
+  ctx2d.restore();
+
+  // Spectrum
+  const fN=analL?analL.frequencyBinCount:1024;
+  const fL=new Uint8Array(fN), fR=new Uint8Array(fN);
+  if(analL){ analL.getByteFrequencyData(fL); analR.getByteFrequencyData(fR); }
+  ctx2d.fillStyle='#030608'; ctx2d.fillRect(0,specY,W,specH);
+  if(cfg.grid) drawGrid(ctx2d,0,specY,W,specH,false,true);
+  drawSpec(ctx2d,fL,fR,0,specY,W,specH,col);
+
+  ctx2d.strokeStyle=`rgba(${hex2rgb(col)},0.22)`;
+  ctx2d.lineWidth=1;
+  ctx2d.beginPath(); ctx2d.moveTo(0,oscH); ctx2d.lineTo(W,oscH); ctx2d.stroke();
+}
+
+// ── Oscilloscope ──────────────────────────────────────────────────────────
+function trig(data,N){
+  const end=Math.floor(N*0.8);
+  for(let i=2;i<end;i++) if(data[i-1]<128&&data[i]>=128) return i;
+  return 0;
+}
+function drawWave(c,dL,dR,W,H,col){
+  const zoom=cfg.oscZoom, N=dL.length, vis=Math.min(Math.floor(N/zoom),N);
+  const t0=trig(cfg.oscMode==='r'?dR:dL,vis), scx=W/vis;
+  const rgb=hex2rgb(col), glow=cfg.oscGlow;
+  const buildPath=(data)=>{
+    c.beginPath();
+    for(let i=0;i<vis&&(i+t0)<data.length;i++){
+      const x=i*scx, v=(data[i+t0]-128)/128;
+      i===0?c.moveTo(x,H/2-v*H*.44):c.lineTo(x,H/2-v*H*.44);
+    }
+  };
+  const ch=(data,bright)=>{
+    c.save(); c.lineJoin='round'; c.lineCap='round';
+    if(glow>0){
+      buildPath(data); c.lineWidth=cfg.oscLW+glow*0.35;
+      c.strokeStyle=`rgba(${rgb},${(bright*0.13).toFixed(3)})`; c.stroke();
+      buildPath(data); c.lineWidth=cfg.oscLW+glow*0.12;
+      c.strokeStyle=`rgba(${rgb},${(bright*0.22).toFixed(3)})`; c.stroke();
+    }
+    buildPath(data); c.lineWidth=cfg.oscLW;
+    c.strokeStyle=`rgba(${rgb},${bright.toFixed(3)})`; c.stroke();
+    c.restore();
+  };
+  if(cfg.oscMode==='lr'){ch(dL,1);ch(dR,0.45);}
+  else if(cfg.oscMode==='l') ch(dL,1);
+  else if(cfg.oscMode==='r') ch(dR,1);
+  else if(cfg.oscMode==='sum'){
+    const d=new Uint8Array(N); for(let i=0;i<N;i++) d[i]=(dL[i]+dR[i])>>1; ch(d,1);
+  }
+}
+function drawLiss(c,dL,dR,W,H,col){
+  const N=dL.length, cx=W/2, cy=H/2, r=Math.min(W,H)*0.43;
+  const rgb=hex2rgb(col), glow=cfg.oscGlow;
+  c.save(); c.lineCap='round';
+  const buildPath=()=>{
+    c.beginPath();
+    for(let i=0;i<N;i++){
+      const x=cx+(dL[i]-128)/128*r, y=cy+(dR[i]-128)/128*r;
+      i===0?c.moveTo(x,y):c.lineTo(x,y);
+    }
+  };
+  if(glow>0){
+    buildPath(); c.lineWidth=cfg.oscLW+glow*0.35; c.strokeStyle=`rgba(${rgb},0.13)`; c.stroke();
+    buildPath(); c.lineWidth=cfg.oscLW+glow*0.12; c.strokeStyle=`rgba(${rgb},0.22)`; c.stroke();
+  }
+  buildPath(); c.lineWidth=cfg.oscLW; c.strokeStyle=col; c.stroke();
+  c.restore();
+}
+
+// ── Spectrum ──────────────────────────────────────────────────────────────
+function binX(bin,N,W,x0){
+  const sr=audioCtx?audioCtx.sampleRate:44100, ny=sr/2;
+  if(cfg.fscale==='log'){
+    const f=Math.max((bin/N)*ny,1);
+    return x0+W*Math.max(0,(Math.log10(f)-Math.log10(20))/(Math.log10(ny)-Math.log10(20)));
+  }
+  return x0+W*(bin/N);
+}
+function buildCols(freq,N,W,x0){
+  const px=new Float32Array(W);
+  for(let b=0;b<N;b++){
+    const x=Math.round(binX(b,N,W,x0)-x0);
+    if(x<0||x>=W) continue;
+    const v=freq[b]/255; if(v>px[x]) px[x]=v;
+  }
+  return px;
+}
+function drawSpec(c,fL,fR,x0,y0,W,H,col){
+  const N=fL.length;
+  const pL=buildCols(fL,N,W,x0), pR=buildCols(fR,N,W,x0);
+  const rgb=hex2rgb(col), mode=cfg.specMode;
+  if(mode==='mirror'){
+    const hw=Math.floor(W/2);
+    const gL=c.createLinearGradient(0,y0+H,0,y0);
+    gL.addColorStop(0,`rgba(${rgb},.95)`); gL.addColorStop(1,`rgba(${rgb},.15)`);
+    c.fillStyle=gL;
+    for(let x=0;x<hw;x++){
+      const v=pL[hw-1-x]||0; if(v<.003) continue;
+      c.fillRect(x0+x,y0+H-v*H,1,Math.max(1,v*H));
+    }
+    for(let x=0;x<hw;x++){
+      const v=pR[x]||0; if(v<.003) continue;
+      c.fillRect(x0+hw+x,y0+H-v*H,1,Math.max(1,v*H));
+    }
+    c.strokeStyle=`rgba(${rgb},.18)`; c.lineWidth=1;
+    c.beginPath(); c.moveTo(x0+hw,y0); c.lineTo(x0+hw,y0+H); c.stroke();
+  } else if(mode==='bars'){
+    const g=c.createLinearGradient(0,y0+H,0,y0);
+    g.addColorStop(0,`rgba(${rgb},.9)`); g.addColorStop(0.6,`rgba(${rgb},.6)`); g.addColorStop(1,`rgba(${rgb},.15)`);
+    c.fillStyle=g;
+    for(let x=0;x<W;x++){
+      const v=(pL[x]+pR[x])*.5; if(v<.003) continue;
+      c.fillRect(x0+x,y0+H-v*H,1,Math.max(1,v*H));
+    }
+  } else {
+    const avg=pL.map((v,i)=>(v+pR[i])*.5);
+    c.lineWidth=3.5; c.strokeStyle=`rgba(${rgb},.12)`; c.beginPath();
+    let s=false;
+    for(let x=0;x<W;x++){
+      const y=y0+H-avg[x]*H; if(!s){c.moveTo(x0+x,y);s=true;}else c.lineTo(x0+x,y);
+    }
+    c.stroke();
+    c.lineWidth=1.5; c.strokeStyle=col; c.stroke();
+    if(mode==='fill'){
+      c.lineTo(x0+W,y0+H); c.lineTo(x0,y0+H); c.closePath();
+      c.fillStyle=`rgba(${rgb},.15)`; c.fill();
+    }
+  }
+}
+
+// ── Grid ──────────────────────────────────────────────────────────────────
+function drawGrid(c,x0,y0,W,H,isOsc,isSpec){
+  const col=cfg.color, rgb=hex2rgb(col);
+  c.save(); c.lineWidth=1;
+  if(isOsc){
+    for(let i=0;i<=4;i++){
+      const y=y0+Math.round(i/4*H);
+      c.strokeStyle=i===2?`rgba(${rgb},.17)`:`rgba(${rgb},.07)`;
+      c.beginPath(); c.moveTo(x0,y); c.lineTo(x0+W,y); c.stroke();
+    }
+    for(let i=0;i<=8;i++){
+      const x=x0+Math.round(i/8*W);
+      c.strokeStyle=`rgba(${rgb},.06)`;
+      c.beginPath(); c.moveTo(x,y0); c.lineTo(x,y0+H); c.stroke();
+    }
+  }
+  if(isSpec&&audioCtx){
+    const ny=audioCtx.sampleRate/2;
+    c.font='8px Share Tech Mono';
+    c.fillStyle=`rgba(${rgb},.3)`;
+    [-12,-24,-36,-48,-60,-72,-84].forEach(db=>{
+      const norm=1-(db-cfg.floor)/(-6-cfg.floor);
+      if(norm<0||norm>1) return;
+      const y=y0+norm*H;
+      c.strokeStyle=`rgba(${rgb},.07)`;
+      c.beginPath(); c.moveTo(x0,y); c.lineTo(x0+W,y); c.stroke();
+      c.fillText(db+'dB',x0+3,y-2);
+    });
+    [50,100,200,500,1000,2000,5000,10000,20000].forEach(f=>{
+      if(f>ny) return;
+      let fx=cfg.fscale==='log'
+        ? x0+W*(Math.log10(f)-Math.log10(20))/(Math.log10(ny)-Math.log10(20))
+        : x0+W*f/ny;
+      if(fx<x0||fx>x0+W) return;
+      c.strokeStyle=`rgba(${rgb},.07)`;
+      c.beginPath(); c.moveTo(fx,y0); c.lineTo(fx,y0+H); c.stroke();
+      c.fillText(f>=1000?f/1000+'k':f,fx+2,y0+H-3);
+    });
+  }
+  c.restore();
+}
+
+function drawStatic(){
+  const W=mc.width, H=mc.height;
+  ctx2d.fillStyle='#030608'; ctx2d.fillRect(0,0,W,H);
+  if(cfg.grid){
+    drawGrid(ctx2d,0,0,W,Math.round(H*cfg.split),true,false);
+    drawGrid(ctx2d,0,Math.round(H*cfg.split),W,H-Math.round(H*cfg.split),false,true);
+  }
+}
+
+function hex2rgb(hex){
+  return `${parseInt(hex.slice(1,3),16)},${parseInt(hex.slice(3,5),16)},${parseInt(hex.slice(5,7),16)}`;
+}
+
+// ── Boot ──────────────────────────────────────────────────────────────────
+syncUI();
+buildTrackUI();
+resizeCanvas();
+if(tracks.length>0){
+  loadTrack(tracks[0]);
+} else {
+  setStatus('NO VIDEO FILES CONFIGURED');
+}
+</script>
+</body>
+</html>

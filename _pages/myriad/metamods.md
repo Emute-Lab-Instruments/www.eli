@@ -14,7 +14,12 @@ Meta modulators are algorithmic systems that can add some extra movement and com
 Pushing `Y` alternates between oscillator and meta-modulator screens.
 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/lJBrkULPvJM?si=vvqFYUzgyXMb0KzL&amp;start=163" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+{% include spectro_video.html
+   files     = "/assets/video/myriad/metamods.mp4|Meta Mods"
+   height    = "720"
+   vizheight = "220"
+   color     = "23a5d9"
+%}
 
 ## Controls
 
@@ -38,6 +43,7 @@ Boids ([Reynolds, 1986](https://dl.acm.org/doi/10.1145/37401.37406)) is an artif
 3. Alignment: match the speed and direction of other boids
 
 From these simple rules, complex behaviour emerges.  The velocity of each of the nine boids modulates the oscillators.
+
 
 ## Lorenz Attractor
 

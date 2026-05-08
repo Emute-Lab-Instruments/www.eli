@@ -47,15 +47,15 @@ You will need:
 2. Crosshead screwdriver
 3. Pliers
 4. Cutters
-5. A computer
-6. A cable to connect USB-C devices to your computer
 
 
 # Build Steps
 
 ![PCB Back](../../assets/images/myriad/build/build1_pcbback.jpg)
+PCB Back
 
 ![PCB Front](../../assets/images/myriad/build/build2_pcbfront.jpg)
+PCB Front
 
 ## Solder capacitors C27, C31, C32, C34
 
@@ -66,6 +66,8 @@ They are all identical, and non-polarised.  Solder them to the back side of the 
 ## ELI2040 boards
 
 ![ELI2040s](../../assets/images/myriad/build/build4_eli2040s.jpg)
+
+One of the boards has a green dot on it; this is the Myriad A unit, it should be placed on the left side of the back of the board. The Myriad B unit, without a green dot, goes on the right hand side.
 
 ### Clip the male pin headers to 35 pins long
 
@@ -84,6 +86,7 @@ Cut direcly along pin 36, and then carefully trim excess plastic from the end
 Use M3 nuts on the front size, and twist the spacers until tight.
 
 ![Spacers](../../assets/images/myriad/build/build6_spacers.jpg)
+![Spacers](../../assets/images/myriad/build/build6_spacers_front.jpg)
 
 ### Mount the ELI2040 boards and screw in the spacer
 
@@ -117,9 +120,13 @@ Loosely mount the M2 spacers on the front side of the board.
 
 ![Screen Spacers](../../assets/images/myriad/build/build12_screenspacers.jpg)
 
-Place the screen onto the board with the pins going through the holes. Screw and tighten up the M2 screws into the spacers, and then tighten up the nuts on the back side.  Now you can solder the screen pins.  Peel away the plastic screen protector.
+Place the screen onto the board with the pins going through the holes. Screw and tighten up the M2 screws into the spacers, and then tighten up the nuts on the back side.  
 
 ![Screen](../../assets/images/myriad/build/build13_screen.jpg)
+
+Now you can solder the screen pins.  Peel away the plastic screen protector.
+
+![Screen](../../assets/images/myriad/build/build13_screen_pins.jpg)
 
 ## Front side components
 
@@ -132,7 +139,11 @@ Place the panel over the front components, and secure (loosely) with the nuts.
 
 Solder the components, and then tighten up the nuts on the front panel.
 
+![Soldered Pots and Jacks - Back](../../assets/images/myriad/build/build14_soldered.jpg)
+
 ![Front Panel](../../assets/images/myriad/build/build15_frontpanel.jpg)
+
+
 
 
 ## Knobs
@@ -147,19 +158,15 @@ Press in the coloured knob caps.
 
 ## ELI2040 boards
 
-Remount the daughter boards.
 
-## Firmware
+Remount the ELI2020 boards, making sure the unit with the green dot is on the left.
 
-Follow the instructions [here](./firmware.md)
+![Front Panel](../../assets/images/myriad/build/build_elis_back_on.jpg)
 
-## Calibration
-
-[coming soon]
 
 # Reference Materials
 
-[Schematic PDF](../../assets/myriad/Myriad_0.4_schematic.pdf)
+[Schematic PDF](../../assets/myriad/Myriad_0.5_schematic.pdf)
 
 
 The Kicad project is in our [Git Repo](https://github.com/Emute-Lab-Instruments/Myriad/)
