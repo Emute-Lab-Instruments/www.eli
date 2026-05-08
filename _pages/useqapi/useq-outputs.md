@@ -35,13 +35,13 @@ Specify a function to calculate the value of analog output 1/2/3/etc. This funct
 
 Specify a function to calculate the value of digital (i.e. binary) output 1/2/3/etc. This function will be evaluated once every update loop.
 
-```
+``` clojure
 (d1 (square (slow 2 beat)))
 ```
-```
+``` clojure
 (d2 (from-list [0 0 1 0 1 1 0 1] (slow 2 bar)))
 ```
-```
+``` clojure
 ;; Silence all digital outs at the same time
 (do 
   (d1 0)
@@ -66,11 +66,19 @@ The useq editor can decode these messages and forward them as MIDI.
 
 ### `q0 <form>`
 
-Specify a function to run at the start of each quantisation period (by default, each bar)
+Specify a function to run at the start of each quantum
 
+
+``` clojure
+;modulate a variable and send to a1
+(define x 0.001)
+(q0 (set x (usin t)))
+(a1 x)
 ```
-(q0 (print bar))
-```
-```
+
+``` clojure
+; reset the q0 function
 (q0 0)
 ```
+
+```q0``` is useful for working with the dsp engine.
