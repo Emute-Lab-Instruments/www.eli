@@ -1,4 +1,195 @@
-<div>
-  <iframe height="500px" width="100%" src="/assets/useq-perform/public/?{{include.params}}">
-  </iframe>
+{% comment %}Parse params string to extract the txt= code file URL{% endcomment %}
+{% assign _uq_code_url = "" %}
+{% assign _uq_parts = include.params | split: "&" %}
+{% for _uq_part in _uq_parts %}
+  {% assign _uq_kv = _uq_part | split: "=" %}
+  {% if _uq_kv[0] == "txt" %}
+    {% assign _uq_code_url = _uq_part | remove_first: "txt=" %}
+  {% endif %}
+{% endfor %}
+{% assign _uq_filename = _uq_code_url | split: "/" | last %}
+
+<div class="useq-code-block"{% if _uq_code_url != "" %} data-code-url="{{ _uq_code_url }}"{% endif %}>
+  <div class="useq-code-header">
+    <span class="useq-code-icon">&#9670;</span>
+    <span class="useq-code-title">{% if _uq_filename != "" %}{{ _uq_filename }}{% else %}uSEQ Code{% endif %}</span>
+    <span class="useq-code-badge">uSEQ</span>
+    {% if _uq_code_url != "" %}<button class="useq-copy-btn" onclick="useqCopyCode(this)">Copy</button>{% endif %}
+  </div>
+  <div class="useq-code-body">
+    {% if _uq_code_url != "" %}
+    <pre class="useq-pre language-clojure"><code class="language-clojure useq-code-content">Loading&#8230;</code></pre>
+    {% else %}
+    <p class="useq-placeholder">&#9888; Interactive editor temporarily unavailable.</p>
+    {% endif %}
+  </div>
 </div>
+
+<style>
+.useq-code-block {
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1.5em 0;
+  border-left: 4px solid #e0a020;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  font-family: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', Consolas, monospace;
+}
+.useq-code-header {
+  display: flex;
+  align-items: center;
+  background: #24283b;
+  padding: 0.5em 1em;
+  gap: 0.6em;
+  border-bottom: 1px solid #1a1b26;
+}
+.useq-code-icon {
+  color: #e0a020;
+  font-size: 0.75em;
+  line-height: 1;
+}
+.useq-code-title {
+  flex: 1;
+  color: #a9b1d6;
+  font-size: 0.82em;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+}
+.useq-code-badge {
+  background: #e0a020;
+  color: #1a1b26;
+  font-size: 0.68em;
+  font-weight: 700;
+  padding: 0.15em 0.55em;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.useq-copy-btn {
+  background: transparent;
+  border: 1px solid #444b6a;
+  color: #7aa2f7;
+  font-size: 0.75em;
+  padding: 0.25em 0.7em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  font-family: inherit;
+}
+.useq-copy-btn:hover {
+  background: #2a2f4e;
+  border-color: #7aa2f7;
+}
+.useq-copy-btn.copied {
+  color: #9ece6a;
+  border-color: #9ece6a;
+}
+.useq-code-body {
+  background: #1a1b26;
+}
+.useq-pre {
+  margin: 0 !important;
+  padding: 1.2em 1.4em !important;
+  background: #1a1b26 !important;
+  overflow-x: auto;
+  font-size: 0.85em;
+  line-height: 1.6;
+  border-radius: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.useq-pre code {
+  background: transparent !important;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0 !important;
+  border: none !important;
+}
+.useq-placeholder {
+  margin: 0;
+  padding: 1.2em 1.4em;
+  color: #565f89;
+  font-style: italic;
+  font-size: 0.85em;
+}
+</style>
+
+<script>
+(function() {
+  function loadPrism(callback) {
+    if (window.Prism && window.Prism.languages && window.Prism.languages.clojure) {
+      callback();
+      return;
+    }
+    if (!document.getElementById('useq-prism-css')) {
+      var link = document.createElement('link');
+      link.id = 'useq-prism-css';
+      link.rel = 'stylesheet';
+      link.href = 'https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css';
+      document.head.appendChild(link);
+    }
+    if (!document.getElementById('useq-prism-core')) {
+      var core = document.createElement('script');
+      core.id = 'useq-prism-core';
+      core.src = 'https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js';
+      core.onload = function() {
+        var clj = document.createElement('script');
+        clj.id = 'useq-prism-clojure';
+        clj.src = 'https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-clojure.min.js';
+        clj.onload = callback;
+        document.head.appendChild(clj);
+      };
+      document.head.appendChild(core);
+    } else {
+      callback();
+    }
+  }
+
+  function initBlocks() {
+    var blocks = document.querySelectorAll('.useq-code-block[data-code-url]:not([data-loaded])');
+    if (!blocks.length) return;
+    loadPrism(function() {
+      blocks.forEach(function(block) {
+        block.setAttribute('data-loaded', '1');
+        var url = block.getAttribute('data-code-url');
+        var codeEl = block.querySelector('.useq-code-content');
+        fetch(url)
+          .then(function(r) {
+            if (!r.ok) throw new Error(r.status);
+            return r.text();
+          })
+          .then(function(text) {
+            codeEl.textContent = text.trimEnd();
+            Prism.highlightElement(codeEl);
+          })
+          .catch(function() {
+            codeEl.textContent = '; (could not load code)';
+            codeEl.style.color = '#565f89';
+          });
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBlocks);
+  } else {
+    initBlocks();
+  }
+})();
+
+function useqCopyCode(btn) {
+  var block = btn.closest('.useq-code-block');
+  var code = block.querySelector('.useq-code-content');
+  var text = code.textContent;
+  navigator.clipboard.writeText(text).then(function() {
+    btn.textContent = '✓ Copied';
+    btn.classList.add('copied');
+    setTimeout(function() {
+      btn.textContent = 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(function() {
+    btn.textContent = 'Error';
+    setTimeout(function() { btn.textContent = 'Copy'; }, 2000);
+  });
+}
+</script>
