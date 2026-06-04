@@ -1,5 +1,5 @@
 ---
-permalink: /myriad/oscmodels
+permalink: /myriad/oscmodels/
 title: "Myriad Oscillator Models"
 sidebar:
   nav: "myriad"
@@ -8,7 +8,7 @@ toc_sticky: true
 ---
 
 
-Myriad has a selection of *oscillator models*; each one is driven by a digital algorithm, using Bitwave Synthesis. Bitwave is a collection of methods for creating high-frequency streams of binary patterns, that are converted into sound using analog circuitry.  Each model has two paramters of control: frequency and ***&#x03F5;***.  The ***&#x03F5;*** parameter creates tonal changes, and works in a different way with each model.  
+Myriad has a selection of *oscillator models*; each one is driven by a digital algorithm, using Bitwave Synthesis. Bitwave is a collection of methods for creating high-frequency streams of binary patterns, that are converted into sound using analog circuitry.  Each model has two paramters of control: frequency and ***&#x03F5;***.  The ***&#x03F5;*** parameter creates tonal changes, and works in a different way with each model (sometimes dramatically, sometimes subtley).  
 
 
 ## (0) Saw

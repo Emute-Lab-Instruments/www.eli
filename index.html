@@ -2,7 +2,7 @@
 layout: splash
 permalink: /
 hidden: true
-title: "Myriad Stereo Pataphonic Oscillator: Out May 28th"
+title: "Myriad Stereo Pataphonic Oscillator"
 header:
   overlay_color: "#5e616c"
   overlay_image: /assets/images/ELI-Mastodon-Banners-1500x500-C.jpg
@@ -38,3 +38,8 @@ feature_row:
 ---
 
 {% include feature_row %}
+
+<h3 class="archive__subtitle">Recent Posts</h3>
+{% for post in site.posts limit:5 %}
+  {% include archive-single.html type="list" %}
+{% endfor %}

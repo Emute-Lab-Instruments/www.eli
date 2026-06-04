@@ -28,10 +28,10 @@ toc_sticky: true
 | Round TFT screen | 1 |
 | Rotary encoder | 3 |
 | B100k pot d shaft | 5 |
-| B100k dual | 1 |
+| A100k dual | 1 |
 | Jack sockets + nuts | 9 |
 | sifam knob d shaft  (small skirt) | 8 |
-| sifam knob round shaft  (small skirt) | 1 |
+| sifam knob T18 shaft  (small skirt) | 1 |
 | Lupin cap | 4 |
 | Pale blue cap | 2 |
 | Black encoder cap | 3 |
@@ -57,64 +57,64 @@ PCB Back
 ![PCB Front](../../assets/images/myriad/build/build2_pcbfront.jpg)
 PCB Front
 
-## Solder capacitors C27, C31, C32, C34
+## [1] Solder capacitors C27, C31, C32, C34
 
 They are all identical, and non-polarised.  Solder them to the back side of the board.
 
 ![Caps](../../assets/images/myriad/build/build3_caps.jpg)
 
-## ELI2040 boards
+## [2] ELI2040 boards
 
 ![ELI2040s](../../assets/images/myriad/build/build4_eli2040s.jpg)
 
 One of the boards has a green dot on it; this is the Myriad A unit, it should be placed on the left side of the back of the board. The Myriad B unit, without a green dot, goes on the right hand side.
 
-### Clip the male pin headers to 35 pins long
+### [3] Clip the male pin headers to 35 pins long
 
 Remove 5 pins from the end.  This can be done by holding the 35th pin with pliers and snapping the other 5 off with your fingers.  Be careful not to snap too many off.
 
 
-### Clip the female pin headers to 35 pins long
+### [4] Clip the female pin headers to 35 pins long
 
 Cut direcly along pin 36, and then carefully trim excess plastic from the end
 
 
 ![Headers](../../assets/images/myriad/build/build5_headers.jpg)
 
-### Mount the 12mm spacers
+### [5] Mount the 12mm spacers
 
 Use M3 nuts on the front size, and twist the spacers until tight.
 
 ![Spacers](../../assets/images/myriad/build/build6_spacers.jpg)
 ![Spacers](../../assets/images/myriad/build/build6_spacers_front.jpg)
 
-### Mount the ELI2040 boards and screw in the spacer
+### [6] Mount the ELI2040 boards and screw in the spacer
 
-Place tghe male headers into the female headers and put the female headers onto the back side of the boar in J2 and J3.  Mount the ELI2040 daughter boards on top, and secure to the spacer with an M3 screw.
+Place the male headers into the female headers and put the female headers onto the back side of the boar in J2 and J3.  Mount the ELI2040 daughter boards on top, and secure to the spacer with an M3 screw.
 
 ![Headers](../../assets/images/myriad/build/build7_headers.jpg)
 
 ![PCB With Headers](../../assets/images/myriad/build/build8_pcbheaders.png)
 
 
-### Solder the pins on both sides of the pin headers
+### [7] Solder the pins on both sides of the pin headers
 
 ![PCB With ELI2040s](../../assets/images/myriad/build/build9_elis.png)
 
 
-### Unscrew the spacer screws and remove the ELI2040 boards
+### [8] Unscrew the spacer screws and remove the ELI2040 boards
 
 We'll put them back later, but we need access to the back side for soldering.
 
 ![PCB Without ELI2040s](../../assets/images/myriad/build/build10_removeelis.jpg)
 
-## Front side LEDs
+## [9] Front side LEDs
 
-Place the two pink LEDs in the top row, and the blue LEDs in the other.  It may help to tape the LEDs in place while you solder to ensure they are straight.
+Place the two pink LEDs in the top row, and the blue LEDs in the other. These should be flush to the PCB. It may help to tape the LEDs in place while you solder to ensure they are straight.
 
 ![LEDs](../../assets/images/myriad/build/build11_leds.jpg)
 
-## Screen
+## [10] Screen
 
 Loosely mount the M2 spacers on the front side of the board. 
 
@@ -128,7 +128,7 @@ Now you can solder the screen pins.  Peel away the plastic screen protector.
 
 ![Screen](../../assets/images/myriad/build/build13_screen_pins.jpg)
 
-## Front side components
+## [11] Front side components
 
 Mount the dual 100k pot in RV1, and then the 5 100k pots into RV-CV1-4 and RV4_VCA_Shape1. Mount the three rotary encoders at the top, and all the jack sockets. 
 
@@ -146,9 +146,9 @@ Solder the components, and then tighten up the nuts on the front panel.
 
 
 
-## Knobs
+## [12] Knobs
 
-Mount the round shaft knob onto the overdrive pot shaft, and then the d-shaft knobs on the other pots.  
+Mount the T18 shaft knob onto the overdrive pot shaft, and then the d-shaft knobs on the other pots.  
 
 ![Knobs](../../assets/images/myriad/build/build16_knobs.jpg)
 
@@ -156,7 +156,7 @@ Press in the coloured knob caps.
 
 ![Caps](../../assets/images/myriad/build/build17_caps.jpg)
 
-## ELI2040 boards
+## [13] ELI2040 boards
 
 
 Remount the ELI2020 boards, making sure the unit with the green dot is on the left.

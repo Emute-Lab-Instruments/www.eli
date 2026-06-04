@@ -1,5 +1,5 @@
 ---
-permalink: /myriad/playersguide
+permalink: /myriad/playersguide/
 title: "Myriad Player's Guide"
 sidebar:
   nav: "myriad"
@@ -127,15 +127,15 @@ To the left of centre, the mappings spread lower and then higher compared to the
 
 ## Waveshaping and Overdrive
 
-The waveshaping section is controlled by the blue-capped knobs, ```VCA/Shape``` and ```Drive```.  These two controls work in tandem to add warmth and dirt to the sound.  This circuitry they control consists of a two-stage wave folder followed by an overdrive.  
+The waveshaping section is controlled by the blue-capped knobs, ```VCA/Shape``` and ```Drive```.  These two controls work in tandem to add warmth and dirt to the sound.  This circuitry they control consists of a two-stage wave folder followed by an overdrive.  This section is tuned for gentle warmth and subtle tonal changes.
 
 ### Waveshaping 
 
-The waveshaper, when driven by the VCA, folds the signal over a certain threshold. For simple waveforms, this adds harmonics. For complex waveforms (e.g. with significant detuning), the waveshaper can act in intersting, noisy and unpredictable ways. The amount of waveshaping is determined by the VCA.
+The waveshaper, when driven by the VCA, folds the signal over a certain threshold. For simple waveforms, this alters harmonics. For complex waveforms (e.g. with significant detuning), the waveshaper can act in intersting, noisy and unpredictable ways. The amount of waveshaping is determined by the VCA, and by the waveform that is being processed.
 
 ### Overdrive
 
-The overdrive section clips the signal using the pink and blue LEDs visible through the front panel. This clipping creates extra harmonics.  Like the waveshaper, the overdrive can behave in unpredictable ways when processing complex intermodulating signals.  The level of overdrive is controlled by the `drive` knob.
+The overdrive section clips the signal using the pink and blue LEDs visible through the front panel. This clipping creates extra harmonics.  Like the waveshaper, the overdrive can behave in unpredictable ways when processing complex intermodulating signals.  The level of overdrive is controlled by the `drive` knob, and also by the level of the waveshaper knob (which is like the input gain).
 
 ## Digital Controls
 

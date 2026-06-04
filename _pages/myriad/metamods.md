@@ -1,5 +1,5 @@
 ---
-permalink: /myriad/metamods
+permalink: /myriad/metamods/
 title: "Myriad Meta Modulators"
 sidebar:
   nav: "myriad"

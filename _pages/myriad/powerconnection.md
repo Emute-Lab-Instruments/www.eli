@@ -1,5 +1,5 @@
 ---
-permalink: /myriad/powerconnection
+permalink: /myriad/powerconnection/
 title: "Myriad Power Connection"
 sidebar:
   nav: "myriad"

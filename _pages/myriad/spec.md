@@ -1,5 +1,5 @@
 ---
-permalink: /myriad/spec
+permalink: /myriad/spec/
 title: "Myriad Specs"
 sidebar:
   nav: "myriad"
