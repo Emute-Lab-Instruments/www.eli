@@ -39,7 +39,7 @@ feature_row:
 
 {% include feature_row %}
 
-<h3 class="archive__subtitle">Recent Posts</h3>
-{% for post in site.posts limit:5 %}
+<h3 class="archive__subtitle">Recent News</h3>
+{% for post in site.posts limit:2 %}
   {% include archive-single.html type="list" %}
 {% endfor %}
